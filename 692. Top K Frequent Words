@@ -1,0 +1,41 @@
+class Solution {
+public:
+ class comp {
+    public:
+       bool operator()(pair<int,string>&p1,pair<int,string>&p2){
+          
+           if(p1.first!=p2.first){
+               return  p1.first>p2.first;
+           }
+           return p1.second<p2.second;
+      }
+};
+    vector<string> topKFrequent(vector<string>& words, int k) {
+
+        priority_queue<pair<int,string>,vector<pair<int,string>>,comp>pq;
+        vector<string> res;
+        unordered_map<string,int>mpp;
+        for(auto it:words){
+            if(mpp.find(it)!=mpp.end()){
+                mpp[it]++;
+            }
+            else mpp[it]=1;
+        }
+      
+      for(auto it:mpp){
+          pq.push({it.second,it.first});
+          if(pq.size()>k)pq.pop();
+      }
+
+    
+
+      while( !pq.empty()){
+          cout<<pq.top().second<<"  ";
+           res.insert(res.begin(), pq.top().second);
+          pq.pop();
+      }
+      return res;
+
+        
+    }
+};
